@@ -1,0 +1,139 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace dbsproject
+{
+    public partial class Form3 : Form
+    {
+        Button[,] btnSeat = new Button[22, 12];
+        Label[] label = new Label[12];
+        int[,] seatStatus = new int[21, 12];
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
+        
+          private void drawPlan()
+        {
+            int offset;
+            int seatMax;
+            for (int j = 1; j <= 11; j++)
+            {
+                seatMax = 20;
+                if (j == 1) seatMax = 14;
+                if (j == 2) seatMax = 16;
+                if (j == 3) seatMax = 17;
+                if (j == 4) seatMax = 19;
+                if (j >= 7 && j <= 9) seatMax = 19;
+                if (j == 11) seatMax = 19;
+                for (int i = 1; i <= seatMax; i++)
+                {
+                    offset = 0;
+                    if (j == 1) offset = 4;
+                    if (j == 2) offset = 3;
+                    if (j == 3) offset = 2;
+                    if (j == 4) offset = 1;
+                    if (j >= 7 && j <= 9) offset = 1;
+                    btnSeat[i, j] = new Button();
+                    btnSeat[i, j].Width = 20;
+                    btnSeat[i, j].Height = 20;
+                    btnSeat[i, j].Left = ((20 * i) + (20 * offset));
+                    if ((i + offset) > 15)
+                        btnSeat[i, j].Left += 20;
+                    btnSeat[i, j].Top = (20 * j);
+                    btnSeat[i, j].Image = Image.FromFile("../../seat1.png");
+                    if (seatStatus[i, j] == 1)
+                        btnSeat[i, j].Image = Image.FromFile("../../Seat3.png");
+                    String buttonName = "btn";
+                    if (j <= 9)
+                        buttonName += " ";
+                    buttonName += j;
+                    if (i <= 9)
+                        buttonName += " ";
+                    buttonName += i;
+                    btnSeat[i, j].Name = buttonName;
+                    btnSeat[i, j].Click += new EventHandler(seat_Click);
+                     panel1.Controls.Add(btnSeat[i, j]);
+                     int rowNumber = j;
+                     if (j > 8)
+                         rowNumber++;
+                     string tooltipText = Convert.ToChar(rowNumber + 64).ToString()
+                     + (i).ToString();
+                     ToolTip buttonToolTip = new ToolTip();
+                     buttonToolTip.SetToolTip(btnSeat[i, j], tooltipText);
+                }
+                label[j] = new Label();
+                label[j].Size = new System.Drawing.Size(14,10);
+                char c = Convert.ToChar(64 + j);
+                if (j > 8)
+                    c = Convert.ToChar(65 + j);
+                label[j].Text = Convert.ToString(c);
+                label[j].Font = new System.Drawing.Font("Microsoft Sans Serif",
+                6F, System.Drawing.FontStyle.Regular,
+               System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                label[j].Location = new System.Drawing.Point(325, 4 + 20 * j);
+                panel1.Controls.Add(label[j]);
+            }
+       
+        }
+          private void seat_Click(object sender, EventArgs e)
+          {
+              Button clickedButton = (Button)sender;
+              string s = clickedButton.Name;
+              int j = Convert.ToInt16(s.Substring(3, 2));
+              int i = Convert.ToInt16(s.Substring(5, 2));
+              if (seatStatus[i, j] != 1)
+              {
+                  if (seatStatus[i, j] == 0)
+                  {
+                      seatStatus[i, j] = 2;
+                      btnSeat[i, j].Image = Image.FromFile("../../seat2.png");
+                  }
+                  else
+                  {
+                      seatStatus[i, j] = 0;
+                      btnSeat[i, j].Image = Image.FromFile("../../seat1.png");
+                  }
+              }
+          }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+          {
+             
+              seatStatus[4, 1] = 1;
+              seatStatus[4, 11] = 1;
+              seatStatus[4, 2] = 1;
+              seatStatus[4, 4] = 1;
+              seatStatus[7, 2] = 1;
+              seatStatus[8, 11] = 1;
+              seatStatus[9, 3] = 1;
+              seatStatus[10, 4] = 1;
+              seatStatus[13, 2] = 1;
+              seatStatus[8, 11] = 1;
+              seatStatus[8, 3] = 1;
+              seatStatus[8, 4] = 1;
+
+              drawPlan();
+        } 
+    
+    
+    }
+
+
+
+}
+
+
+ 

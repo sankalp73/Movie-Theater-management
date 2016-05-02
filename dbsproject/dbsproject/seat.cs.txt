@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace dbsproject
+{
+    class seat
+    {
+        private char seatRow;
+        private int seatNumber;
+        private int performanceID;
+        private int available;
+        private int bookingID;
+        public static int seatCount;
+ public static seat[] seatObject = new seat[240];
+ public static void loadSeats(int p)
+ {
+     //AFTER MAKING THE DATABASE
+ }
+        public void setSeatRow(char r)
+        {
+            seatRow = r;
+        }
+        public char getSeatRow()
+        {
+            return seatRow;
+        }
+        public void setSeatNumber(int s)
+        {
+            seatNumber = s;
+        }
+        public int getSeatNumber()
+        {
+            return seatNumber;
+        }
+        public void setPerformanceID(int p)
+        {
+            performanceID = p;
+        }
+        public int getPerformanceID()
+        {
+            return performanceID;
+        }
+        public void setAvailable(int a)
+        {
+            available = a;
+        }
+        public int getAvailable()
+        {
+            return available;
+        }
+        public void setBookingID(int b)
+        {
+            bookingID = b;
+        }
+        public int getBookingID()
+        {
+            return bookingID;
+        }
+    }
+}
